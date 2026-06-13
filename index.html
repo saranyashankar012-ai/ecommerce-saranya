@@ -1,88 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShopEase</title>
-<link rel="stylesheet" href="ecom.css">
-</head>
-<body>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ShopEase \u2013 Discover Amazing Products</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+  /* \u2500\u2500 TOKENS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+  :root {
+    --violet:   #7C3AED;
+    --violet-d: #5B21B6;
+    --violet-l: #A78BFA;
+    --pink:     #EC4899;
+    --pink-l:   #F9A8D4;
+    --cyan:     #06B6D4;
+    --gold:     #F59E0B;
+    --bg:       #0F0720;
+    --bg2:      #1A0B38;
+    --bg3:      #240D50;
+    --card:     #1E1040;
+    --card2:    #2A1660;
+    --text:     #F3F0FF;
+    --muted:    #9D8EC9;
+    --border:   rgba(124,58,237,.35);
+    --rad:      18px;
+    --shadow:   0 8px 40px rgba(124,58,237,.25);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
 
-<header>
-    <nav>
-        <h2>ShopEase</h2>
-        <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search products...">
-    <button>🔍</button>
-</div>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#products">Products</a></li>
-            <li><a href="#categories">Categories</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-</header>
+  /* \u2500\u2500 SCROLLBAR \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 3px; }
 
-<section id="home" class="hero">
-    <div class="hero-content">
-        <h1>Discover Amazing Products</h1>
-        <p>Shop the latest fashion, gadgets, and more.</p>
-        <button>Shop Now</button>
-    </div>
-</section>
+  /* \u2500\u2500 HEADER / NAV \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+  header {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    background: rgba(15,7,32,.85);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem; font-weight: 900;
+    background: linear-gradient(135deg, var(--violet-l), var(--pink));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+  }
+  nav { display: flex; gap: 2rem; align-items: center; }
+  nav a {
+    color: var(--muted); text-decoration: none; font-size: .9rem;
+    font-weight: 500; transition: color .2s;
+  }
+  nav a:hover { color: var(--text); }
+  .nav-actions { display: flex; gap: 1rem; align-items: center; }
+  .search-wrap {
+    display: flex; align-items: center; gap: .5rem;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 50px; padding: .4rem 1rem;
+    transition: border-color .2s;
+  }
+  .search-wrap:focus-within { border-color: var(--violet); }
+  .search-wrap input {
+    background: none; border: none; outline: none;
+    color: var(--text); font-size: .85rem; width: 160px;
+  }
+  .search-wrap input::placeholder { color: var(--muted); }
+  .search-wrap i { color: var(--muted); font-size: .85rem; }
+  .icon-btn {
+    position: relative; background: var(--bg3);
+    border: 1px solid var(--border); border-radius: 50%;
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--muted); transition: all .2s;
+  }
+  .icon-btn:hover { border-color: var(--violet); color: var(--text); }
+  .badge {
+    position: absolute; top: -4px; right: -4px;
+    background: var(--pink); color: #fff; font-size: .65rem;
+    font-weight: 700; border-radius: 50%; width: 18px; height: 18px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--text); font-size: 1.4rem; }
+  .mobile-menu {
+    display: none; position: fixed; top: 70px; left: 0; right: 0;
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+    padding: 1.5rem 5%; flex-direction: column; gap: 1rem; z-index: 999;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: var(--muted); text-decoration: none; font-size: 1rem; font-weight: 500; }
 
-<section id="products" class="products">
-    <h2>Featured Products</h2>
+  /* \u2500\u2500 HERO \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+  .hero {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 30% 40%, #4C1D95 0%, transparent 55%),
+                radial-gradient(ellipse at 75% 70%, #831843 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 10%, #0E7490 0%, transparent 40%),
+                var(--bg);
+    display: flex; align-items: center;
+    padding: 100px 5% 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(167,139,250,.15)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .hero-content { max-width: 580px; z-index: 1; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(124,58,237,.2); border: 1px solid var(--border);
+    border-radius: 50px; padding: .35rem 1rem;
+    font-size: .8rem; font-weight: 600; color: var(--violet-l);
+    margin-bottom: 1.5rem; letter-spacing: .5px; text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 900; line-height: 1.05;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--violet-l), var(--pink));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p { color: var(--muted); font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    color: #fff; border: none; padding: .85rem 2rem;
+    border-radius: 50px; font-size: .95rem; font-weight: 600;
+    cursor: pointer; transition: transform .2s, box-shadow .2s;
+    text-decoration: none; display: inline-flex; align-items: center; gap: .5rem;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(236,72,153,.4); }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border); color: var(--text);
+    padding: .85rem 2rem; border-radius: 50px;
+    font-size: .95rem; font-weight: 600; cursor: pointer;
+    transition: border-color .2s, background .2s;
+    text-decoration: none;
+  }
+  .btn-outline:hover { border-color: var(--violet); background: rgba(124,58,237,.1); }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 900; color: var(--violet-l);
+  }
+  .stat-label { font-size: .8rem; color: var(--muted); margin-top: .1rem; }
+  .hero-float {
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    z-index: 1;
+  }
+  .float-card {
+    background: rgba(30,16,64,.8); border: 1px solid var(--border);
+    border-radius: var(--rad); padding: 1rem; text-align: center;
+    backdrop-filter: blur(10px); width: 130px;
+    transition: transform .3s;
+  }
+  .float-card:nth-child(2) { margin-top: 2rem; }
+  .float-card:nth-child(4) { margin-top: -2rem; }
+  .float-card:hover { transform: translateY(-6px); }
+  .float-card .emoji { font-size: 2rem; margin-bottom: .5rem; }
+  .float-card .fc-name { font-size: .75rem; font-weight: 600; }
+  .float-card .fc-price { font-size: .8rem; color: var(--violet-l); font-weight: 700; margin-top: .2rem; }
 
-    <div class="product-grid">
+  /* \u2500\u2500 OFFER BANNER \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+  .offer-banner {
+    background: linear-gradient(135deg, #7C3AED, #EC4899, #06B6D4);
+    padding: 1rem 5%;
+    display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+    flex-wrap: wrap; text-align: center;
+  }
+  .offer-banner p { font-size: .9rem; font-weight: 600; }
+  .offer-tag {
+    background: rgba(255,255,255,.2); border-radius: 6px;
+    padding: .2rem .6rem; font-size: .8rem; font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .countdown { display: flex; gap: .5rem; }
+  .cd-box {
+    background: rgba(0,0,0,.3); border-radius: 6px;
+    padding: .25rem .5rem; font-size: .85rem; font-weight: 700;
+    min-width: 38px; text-align: center;
+  }
+  .cd-box span { display: block; font-size: .55rem; color: rgba(255,255,255,.7); font-weight: 400; }
 
-        <div class="card">
-            <img src="WhatsApp Image 2026-06-12 at 7.20.44 PM.jpeg" alt="Shoes">
-            <h3>Running Shoes</h3>
-            <p>₹2,999</p>
-            <button>Add to Cart</button>
-        </div>
+  /* \u2500\u2500 SECTION WRAPPER \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+  section { padding: 80px 5%; }
+  .section-head { text-align: center; margin-bottom: 3rem; }
+  .section-eyebrow {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    font-size: .8rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: .75rem;
+  }
+  .section-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900;
+    margin-bottom: .75rem;
+  }
+  .section-head p { color: var(--muted); max-width: 480px; margin: 0 auto; line-height: 1.7; }
 
-        <div class="card">
-            <img src="WhatsApp Image 2026-06-12 .jpeg" alt="Watch">
-            <h3>Smart Watch</h3>
-            <p>₹4,999</p>
-            <button>Add to Cart</button>
-        </div>
+  /* \u2500\u2500 FILTERS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+  .filters {
+    display: flex; gap: .75rem; flex-wrap: wrap;
+    justify-content: center; margin-bottom: 2.5rem;
+  }
+  .filter-btn {
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--muted); border-radius: 50px; padding: .5rem 1.2rem;
+    font-size: .85rem; font-weight: 500; cursor: pointer; transition: all .2s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    border-color: transparent; color: #fff;
+  }
 
-        <div class="card">
-            <img src="WhatsApp Image 2026-06-12 at 7.20.45 PM 1.jpeg" alt="Headphones">
-            <h3>Headphones</h3>
-            <p>₹1,999</p>
-            <button>Add to Cart</button>
-        </div>
-        <div class="card">
-            <img src="WhatsApp Image 2026-06-12 at 7.20.44 .jpeg" alt="Fashions">
-            <h3>Fashions</h3>
-            <p>₹799</p>
-            <button>Add to Cart</button>
-        </div>
-
-    </div>
-</section>
-
-<section id="categories">
-    <h2>Categories</h2>
-    <p>Fashion | Watches | Shoes | Electronics</p>
-</section>
-
-<section id="contact">
-    <h2>Contact Us</h2>
-    <p>Email: shopease@gmail.com</p>
-    <p>Phone: +91 9876543210</p>
-</section>
-
-<footer>
-    <p>© 2026 ShopEase. All Rights Reserved.</p>
-</footer>
-
-<script src="ecom.js"></script>
-
-</body>
-</html>
+  /* \u2500\u2500 PRODUCT GRID \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+  .products-section { background: var(--bg2); }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .product-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--rad); overflow: hidden;
+    transition: transform .3s, box-shadow .3s;
+    position: relative;
+  }
+  .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow); }
+  .product-card.hidden { display: none; }
+  .product-img {
+    position: relative; overflow: hidden;
+    aspect-ratio: 4/3; background: var(--bg3);
+  }
+  .product-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .4s;
+  }
+  .product-card:hover .product-img img { transform: scale(1.08); }
+  .discount-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--pink); color: #fff; font-size: .7rem;
+    font-weight: 
